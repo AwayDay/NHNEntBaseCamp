@@ -13,4 +13,5 @@ NHN 엔터테인먼트 입사 전 사전 과제
 * https://slipp.net/questions/208 참조
 * 서블릿 버전 문제였던 것 같다.
 
-## 404 Error 문제 (#7)
+## 404 Error 문제 
+* #7 참조
