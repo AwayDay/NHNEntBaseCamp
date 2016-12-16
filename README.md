@@ -14,4 +14,4 @@ NHN 엔터테인먼트 입사 전 사전 과제
 * 서블릿 버전 문제였던 것 같다.
 
 ## 404 Error 문제 
-* #7 참조
+* 문제는 https://github.com/AwayDay/NHNEntBaseCamp/issues/7 참조
