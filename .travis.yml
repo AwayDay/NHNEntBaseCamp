@@ -3,3 +3,4 @@ language: java
 script:
         - cd $TRAVIS_BUILD_DIR/basecamp
         #- mvn basecamp
+        - mvn test
