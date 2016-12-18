@@ -9,6 +9,12 @@
 		<param-value>/WEB-INF/spring/root-context.xml</param-value>
 	</context-param>
 	
+	<!-- 해당 경로의 컨텍스트-*.xml 파일을 모두 읽어들인다. -->
+	<context-param>
+	    <param-name>contextConfigLocation</param-name>
+	    <param-value>classpath*:config/spring/context-*.xml</param-value>
+	</context-param>
+	
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>

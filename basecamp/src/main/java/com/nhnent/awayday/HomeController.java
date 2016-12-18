@@ -6,17 +6,24 @@ import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.nhnent.awayday.dao.ArticleDAO;
+import com.nhnent.awayday.dto.ArticleDTO;
+
 /**
  * Handles requests for the application home page.
  */
 @Controller
 public class HomeController {
+	
+	@Autowired
+	private ArticleDAO articleDAO;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -43,6 +50,12 @@ public class HomeController {
 		//logger.info("Your E-mail addr : {}", email);
 		//logger.info("Your password : {}", password);
 		//logger.info("Your text : {}", content);
+		ArticleDTO article = new ArticleDTO();
+		article.setEmail(email);
+		article.setPassword(password);
+		article.setContent(content);
+		// 제발 좀
+		articleDAO.insertArticle(article);
 	}
 	
 }
