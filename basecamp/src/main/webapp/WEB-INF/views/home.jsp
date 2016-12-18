@@ -38,7 +38,7 @@
 							<label for="inputText">내용</label>
 							<textarea type="text" rows="5" class="form-control" id="inputText"></textarea>
 						</div>
-						<button type="submit" class="btn btn-default btn-block" onclick="">post</button>
+						<button type="button" class="btn btn-default btn-block" onclick="newArticle()">post</button>
 					</form>
 				</div>
 			</div>
@@ -46,5 +46,22 @@
 	</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		function newArticle(){
+			console.log($("#inputEmail").val());
+			$.ajax({
+				type: 'POST',
+				url: "/newarticle",
+				data: {"email":$("#inputEmail").val(), "password":$("#inputPassword").val(), "content":$("#inputText").val()},
+				success: function(data) {
+					Console.log(data);
+				},
+				dataType: "json",
+				error: function(data) {
+					console.log(data);
+				}
+			});
+		}
+	</script>
 </body>
 </html>

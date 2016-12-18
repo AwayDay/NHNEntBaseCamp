@@ -36,4 +36,9 @@ public class HomeController {
 		return "home";
 	}
 	
+	@RequestMapping(value = "/newarticle", method = RequestMethod.POST)
+	public void newArticle() {
+		logger.info("hello POST!");
+	}
+	
 }
