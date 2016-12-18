@@ -40,6 +40,7 @@ public class HomeController {
 	public String newarticle(Model model){
 		logger.info("Hell o, New!");
 		return "testview";
+		//return "home";
 	}
 	
 }
