@@ -31,9 +31,15 @@ public class HomeController {
 		
 		String formattedDate = dateFormat.format(date);
 		
-		model.addAttribute("hell o, serverTime", formattedDate );
+		model.addAttribute("serverTime", formattedDate );
 		
 		return "home";
+	}
+	
+	@RequestMapping(value = "/testview", method = RequestMethod.GET)
+	public String newarticle(Model model){
+		logger.info("Hell o, New!");
+		return "testview";
 	}
 	
 }
