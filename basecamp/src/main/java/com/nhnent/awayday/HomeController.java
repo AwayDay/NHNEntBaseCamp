@@ -36,11 +36,4 @@ public class HomeController {
 		return "home";
 	}
 	
-	@RequestMapping(value = "/testview", method = RequestMethod.GET)
-	public String newarticle(Model model){
-		logger.info("Hell o, New!");
-		return "testview";
-		//return "home";
-	}
-	
 }
