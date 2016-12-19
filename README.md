@@ -48,7 +48,13 @@ NHN 엔터테인먼트 입사 전 사전 과제
 ## POST 요청 처리하기
 * 컨트롤러 하나 더 만들어야 하나 하고 쫄았는데
 * 다행히도 리퀘스트 매핑 메서드 하나 더 만들면 되더라.
-* 포스트 요청 하면서 같이 넘긴 인자(json)도 소스단에서 인자로 잘 넘어가짐(약간의 어노테이션질이 필요함)
+```
+@RequestMapping(value = "/aaa", method = RequestMethod.POST)
+```
+* 포스트 요청 하면서 같이 넘긴 인자(json)도 소스단에서 인자로 잘 넘어가짐
+```
+@RequestParam("name") String name, ...
+```
 * 그런데 지금 내 설계가 설계라, 클라이언트한테 뭔가.... 그, 답변을 보내고 싶은데 말이지.
 * 그것을 좀 생각해 볼 필요가 있겠다. 정상처리면 200, 서버 에러면 500, 하는 느낌으로.
 * 에러 코드 넣는 김에 REST 문서들 다시 한 번 찾아볼 필요도 있다
@@ -56,6 +62,39 @@ NHN 엔터테인먼트 입사 전 사전 과제
 
 ## MySQL MyBatis 연동하기
 1. pom.xml에 적절한 디펜던시를 넣는다
+```
+<dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-jdbc</artifactId>
+        <version>${org.springframework-version}</version>
+</dependency>
+```
+```
+<!-- MyBatis -->
+<dependency>
+        <groupId>org.mybatis</groupId>
+        <artifactId>mybatis</artifactId>
+        <version>3.2.7</version>
+</dependency>
+<dependency>
+        <groupId>org.mybatis</groupId>
+        <artifactId>mybatis-spring</artifactId>
+        <version>1.2.2</version>
+</dependency>
+<dependency>
+        <groupId>commons-dbcp</groupId>
+        <artifactId>commons-dbcp</artifactId>
+        <version>1.4</version>
+</dependency>
+```
+```
+<!-- MySQL -->
+<dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>5.1.31</version>
+</dependency>
+```
 2. java/resources 하위에 적절한 폴더(나는 config 라고 했다.)를 생성해서, xml 설정 문서를 추가한다(DB 접속, 세션 획득 등)
 3. web.xml에서 위에 추가한 설정 파일들을 읽을 수 있도록 context-param을 추가한다.
 4. 역시 java/resources 하위에 적절한 폴더(보통 mapper 폴더를 만들더라)를 만들어서, xml 문서에 SQL 명령어를 넣는다.
