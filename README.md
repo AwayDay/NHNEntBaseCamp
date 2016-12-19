@@ -95,7 +95,7 @@ NHN 엔터테인먼트 입사 전 사전 과제
         <version>5.1.31</version>
 </dependency>
 ```
-* java/resources 하위에 적절한 폴더(나는 config 라고 했다.)를 생성해서, xml 설정 문서를 추가한다(DB 접속, 세션 획득 등)
+* java/resources 하위에 적절한 폴더를 생성해서, xml 설정 문서를 추가한다(DB 접속, 세션 획득 등)
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
@@ -137,12 +137,12 @@ NHN 엔터테인먼트 입사 전 사전 과제
         <param-value>classpath*:config/알아서 경로를 넣는다.</param-value>
 </context-param>
 ```
-* 역시 java/resources 하위에 적절한 폴더(보통 mapper 폴더를 만들더라)를 만들어서, xml 문서에 SQL 명령어를 넣는다.
+* 역시 java/resources 하위에 적절한 폴더를 만들어서, xml 문서에 SQL 명령어를 넣는다.
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
-<mapper namespace="articleSQL">
+<mapper namespace="함수는 네임스페이스 기준으로 호출되니 적절한 이름을 선정하자">.
 	<insert></insert>
 	<select></select>
         <!-- 뭐 이런 식으로 -->
