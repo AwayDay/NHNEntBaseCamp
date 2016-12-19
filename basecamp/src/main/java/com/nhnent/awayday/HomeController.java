@@ -34,12 +34,20 @@ public class HomeController {
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		//Date date = new Date();
+		//DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		
-		String formattedDate = dateFormat.format(date);
+		//String formattedDate = dateFormat.format(date);
 		
-		model.addAttribute("serverTime", formattedDate );
+		//model.addAttribute("serverTime", formattedDate );
+		
+		/*
+		for(ArticleDTO articleDTO : articleDAO.selectAllArticle()){
+			logger.info(articleDTO.getContent());
+		}
+		*/
+		
+		model.addAttribute("allArticle", articleDAO.selectAllArticle());
 		
 		return "home";
 	}

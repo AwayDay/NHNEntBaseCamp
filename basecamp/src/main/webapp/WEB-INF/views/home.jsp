@@ -43,7 +43,20 @@
 				</div>
 			</div>
 		</div>
-		<div></div>
+		<div class="col-md-12" id="articleList">
+			<!-- 믿기 힘들지만, 이것이 반복문이라고 한다 -->
+			<!-- jade님 저를 구원해주세요 -->
+			<c:forEach var="article" items="${allArticle}">
+				<div class="panel panel-default">
+	                <div class="panel-heading">
+	                	<h3 class="panel-title">${article.email}</h3>
+	                </div>
+	                <div class="panel-body">
+	                	${article.content}
+	                </div>
+	            </div>
+			</c:forEach>
+		</div>
 	</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>

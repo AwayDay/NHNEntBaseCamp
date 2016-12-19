@@ -6,7 +6,7 @@
 		INSERT INTO ARTICLE (email, password, content, created_date) 
 		VALUES (#{email}, #{password}, #{content}, NOW())
 	</insert>
-	<select id="selectAllArticle" resultType="hashmap">
-		SELECT * FROM ARTICLE ORDER BY created_date
+	<select id="selectAllArticle" resultType="com.nhnent.awayday.dto.ArticleDTO">
+		SELECT * FROM ARTICLE ORDER BY created_date DESC
 	</select>
 </mapper>
