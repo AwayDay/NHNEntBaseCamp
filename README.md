@@ -48,11 +48,11 @@ NHN 엔터테인먼트 입사 전 사전 과제
 ## POST 요청 처리하기
 * 컨트롤러 하나 더 만들어야 하나 하고 쫄았는데
 * 다행히도 리퀘스트 매핑 메서드 하나 더 만들면 되더라.
-```
+```java
 @RequestMapping(value = "/aaa", method = RequestMethod.POST)
 ```
 * 포스트 요청 하면서 같이 넘긴 인자(json)도 소스단에서 인자로 잘 넘어가짐
-```
+```java
 @RequestParam("name") String name, ...
 ```
 * 그런데 지금 내 설계가 설계라, 클라이언트한테 뭔가.... 그, 답변을 보내고 싶은데 말이지.
@@ -62,14 +62,14 @@ NHN 엔터테인먼트 입사 전 사전 과제
 
 ## MySQL MyBatis 연동하기
 * pom.xml에 적절한 디펜던시를 넣는다
-```
+```xml
 <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-jdbc</artifactId>
         <version>${org.springframework-version}</version>
 </dependency>
 ```
-```
+```xml
 <!-- MyBatis -->
 <dependency>
         <groupId>org.mybatis</groupId>
@@ -87,7 +87,7 @@ NHN 엔터테인먼트 입사 전 사전 과제
         <version>1.4</version>
 </dependency>
 ```
-```
+```xml
 <!-- MySQL -->
 <dependency>
         <groupId>mysql</groupId>
@@ -96,7 +96,7 @@ NHN 엔터테인먼트 입사 전 사전 과제
 </dependency>
 ```
 * java/resources 하위에 적절한 폴더를 생성해서, xml 설정 문서를 추가한다(DB 접속, 세션 획득 등)
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -111,7 +111,7 @@ NHN 엔터테인먼트 입사 전 사전 과제
     </bean>
 </beans>
 ```
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -130,7 +130,7 @@ NHN 엔터테인먼트 입사 전 사전 과제
 </beans>
 ```
 * web.xml에서 위에 추가한 설정 파일들을 읽을 수 있도록 context-param을 추가한다.
-```
+```xml
 <!-- 해당 경로의 컨텍스트-*.xml 파일을 모두 읽어들인다. -->
 <context-param>
         <param-name>contextConfigLocation</param-name>
@@ -138,7 +138,7 @@ NHN 엔터테인먼트 입사 전 사전 과제
 </context-param>
 ```
 * 역시 java/resources 하위에 적절한 폴더를 만들어서, xml 문서에 SQL 명령어를 넣는다.(참조 http://www.mybatis.org/mybatis-3/ko/sqlmap-xml.html)
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
