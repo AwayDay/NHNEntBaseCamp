@@ -43,25 +43,35 @@
 				</div>
 			</div>
 		</div>
+		<div></div>
 	</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+	
 	<script type="text/javascript">
 		function newArticle(){
-			console.log($("#inputEmail").val());
-			$.ajax({
-				type: 'POST',
-				url: "/newarticle",
-				data: {"email":$("#inputEmail").val(), "password":$("#inputPassword").val(), "content":$("#inputText").val()},
-				success: function(data) {
-					Console.log(data);
-				},
-				dataType: "json",
-				error: function(data) {
-					console.log(data);
-				}
-			});
+			//console.log($("#inputEmail").val());
+			if(!($("#inputEmail").val()) || !($("#inputPassword").val()) || !($("#inputText").val())){
+				console.log("null");
+			}else{
+				$.ajax({
+					type: 'POST',
+					url: "/newarticle",
+					data: {"email":$("#inputEmail").val(), "password":$("#inputPassword").val(), "content":$("#inputText").val()},
+					success: function(data) {
+						Console.log(data);
+						$("#inputEmail").val() = "";
+						$("#inputPassword").val() = "";
+						$("#inputText").val() = "";
+					},
+					dataType: "json",
+					error: function(data) {
+						console.log(data);
+					}
+				});	
+			}
 		}
 	</script>
+	
 </body>
 </html>

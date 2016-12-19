@@ -15,7 +15,7 @@ public class ArticleDAOService implements ArticleDAO {
 	@Override
 	public void insertArticle(ArticleDTO article) {
 		// TODO Auto-generated method stub
-		sqlSession.insert("newarticle.insertArticle", article);
+		sqlSession.insert("articleSQL.insertArticle", article);
 	}
 
 }
