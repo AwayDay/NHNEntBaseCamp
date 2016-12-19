@@ -137,7 +137,7 @@ NHN 엔터테인먼트 입사 전 사전 과제
         <param-value>classpath*:config/알아서 경로를 넣는다.</param-value>
 </context-param>
 ```
-* 역시 java/resources 하위에 적절한 폴더를 만들어서, xml 문서에 SQL 명령어를 넣는다.
+* 역시 java/resources 하위에 적절한 폴더를 만들어서, xml 문서에 SQL 명령어를 넣는다.(참조 http://www.mybatis.org/mybatis-3/ko/sqlmap-xml.html)
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -149,7 +149,7 @@ NHN 엔터테인먼트 입사 전 사전 과제
 </mapper>
 ```
 * 적절한 패키지에 적절한 이름으로 테이블을 대표할 수 있는 DTO 클래스를 생성한다. POJO인가 뭔가, 여하간 캡슐화 잘 되어 있어야 함.
-* DAO 인터페이스를 만든다. 내 생각엔 인터페이스는 안 만들어도 될 것 같은데, 남들 다 만드니까 나도 만들어봤다.
+* DAO 인터페이스를 만든다. 내 생각엔 인터페이스는 안 만들어도 될 것 같은데, 남들 다 만드니까 나도 만들어봤다. → 만드는 이유를 알았다! 그러나 나는 리드미의 여백이 부족하여 여기에 기술하지 않을 것이다.
 * 위 인터페이스를 구현한 DAO(적절한 이름) 클래스를 생성한다. 여기에서 위에서 생성한 SQL 문법을 사용한다.
 * 잘 구현했으면 다시 컨트롤러로 돌아와서, 당신이 생각하는 그 방식대로 쓰면 됩니다!
 * 잘 모르겠으면 소스를 보시오.
