@@ -71,15 +71,15 @@
 			} else {
 				$.ajax({
 					type: 'POST',
-					url: "/newarticle",
+					url: "/article",
 					data: {"email":$("#inputEmail").val(), "password":$("#inputPassword").val(), "content":$("#inputText").val()},
 					success: function(data) {
-						Console.log(data);
-						$("#inputEmail").val() = "";
-						$("#inputPassword").val() = "";
-						$("#inputText").val() = "";
+						console.log(data);
+						$("#inputEmail").val("");
+						$("#inputPassword").val("");
+						$("#inputText").val("");
 					},
-					dataType: "json",
+					//dataType: "json",
 					error: function(data) {
 						console.log("ERROR!");
 						console.log(data);
