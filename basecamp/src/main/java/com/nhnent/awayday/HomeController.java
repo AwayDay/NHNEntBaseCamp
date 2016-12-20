@@ -1,7 +1,5 @@
 package com.nhnent.awayday;
 
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -12,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.nhnent.awayday.dao.ArticleDAO;
 import com.nhnent.awayday.dto.ArticleDTO;
@@ -34,26 +34,13 @@ public class HomeController {
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
-		//Date date = new Date();
-		//DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
-		//String formattedDate = dateFormat.format(date);
-		
-		//model.addAttribute("serverTime", formattedDate );
-		
-		/*
-		for(ArticleDTO articleDTO : articleDAO.selectAllArticle()){
-			logger.info(articleDTO.getContent());
-		}
-		*/
-		
 		model.addAttribute("allArticle", articleDAO.selectAllArticle());
 		
 		return "home";
 	}
 	
 	@RequestMapping(value = "/newarticle", method = RequestMethod.POST)
-	public void newArticle(@RequestParam("email") String email,@RequestParam("password") String password, @RequestParam("content") String content) {
+	public ModelAndView newArticle(@RequestParam("email") String email,@RequestParam("password") String password, @RequestParam("content") String content) {
 		logger.info("hello POST!");
 		//logger.info("Your E-mail addr : {}", email);
 		//logger.info("Your password : {}", password);
@@ -62,8 +49,15 @@ public class HomeController {
 		article.setEmail(email);
 		article.setPassword(password);
 		article.setContent(content);
-		// 제발 좀
+		
 		articleDAO.insertArticle(article);
+		
+		/*
+		RedirectView rv = new RedirectView("/");
+		rv.setExposeModelAttributes(false);
+		return new ModelAndView(rv);
+		*/
+		return new ModelAndView("redirect:/");
 	}
 	
 }

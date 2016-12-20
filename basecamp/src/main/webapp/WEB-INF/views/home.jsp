@@ -64,9 +64,11 @@
 	<script type="text/javascript">
 		function newArticle(){
 			//console.log($("#inputEmail").val());
-			if(!($("#inputEmail").val()) || !($("#inputPassword").val()) || !($("#inputText").val())){
+			if (!($("#inputEmail").val()) || !($("#inputPassword").val()) || !($("#inputText").val())) {
 				console.log("null");
-			}else{
+			} else if (!isEmail($("#inputEmail").val())) {
+				console.log("not email!!");
+			} else {
 				$.ajax({
 					type: 'POST',
 					url: "/newarticle",
@@ -79,9 +81,20 @@
 					},
 					dataType: "json",
 					error: function(data) {
+						console.log("ERROR!");
 						console.log(data);
 					}
 				});	
+			}
+		}
+		
+		function isEmail(addr){
+			console.log(addr);
+			var list = addr.split("@");
+			if(list.length === 2){
+				return true;
+			} else {
+				return false;
 			}
 		}
 	</script>
