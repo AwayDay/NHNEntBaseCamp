@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,6 +39,18 @@ public class MyRestController {
 		
 		articleDAO.insertArticle(article);
 		
+		return new ResponseEntity<>("OK", HttpStatus.OK);	
+	}
+	
+	private boolean isEmail(String addr) {
+		if (addr.split("@").length == 2){
+			return true;
+		}
+		return false;
+	}
+	
+	@RequestMapping(value = "/article/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<?> updateArticle(@PathVariable int id, @RequestParam("password") String password){
 		return new ResponseEntity<>("OK", HttpStatus.OK);	
 	}
 }
