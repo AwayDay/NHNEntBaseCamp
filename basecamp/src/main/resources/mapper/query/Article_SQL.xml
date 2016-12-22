@@ -3,10 +3,10 @@
  
 <mapper namespace="articleSQL">
 	<insert id="insertArticle" parameterType="com.nhnent.awayday.dto.ArticleDTO" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO ARTICLE (email, password, content, created_date) 
+		INSERT INTO ARTICLE (email, password, content, createdDate) 
 		VALUES (#{email}, #{password}, #{content}, NOW())
 	</insert>
 	<select id="selectAllArticle" resultType="com.nhnent.awayday.dto.ArticleDTO">
-		SELECT * FROM ARTICLE ORDER BY created_date DESC
+		SELECT * FROM ARTICLE ORDER BY createdDate DESC
 	</select>
 </mapper>

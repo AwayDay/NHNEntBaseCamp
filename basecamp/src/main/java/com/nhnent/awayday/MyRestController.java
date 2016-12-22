@@ -27,19 +27,24 @@ public class MyRestController {
 	@RequestMapping(value = "/article", method = RequestMethod.POST)
 	public ResponseEntity<?> newArticle(@RequestParam("email") String email,@RequestParam("password") String password, @RequestParam("content") String content) {
 		logger.info("hello POST!");
+		
 		logger.info("Your E-mail addr : {}", email);
 		logger.info("Your password : {}", password);
 		logger.info("Your text : {}", content);
 		
-		ArticleDTO article = new ArticleDTO();
-		
-		article.setEmail(email);
-		article.setPassword(password);
-		article.setContent(content);
-		
-		articleDAO.insertArticle(article);
-		
-		return new ResponseEntity<>("OK", HttpStatus.OK);	
+		if(isEmail(email)){
+			ArticleDTO article = new ArticleDTO();
+			
+			article.setEmail(email);
+			article.setPassword(password);
+			article.setContent(content);
+			
+			articleDAO.insertArticle(article);
+			
+			return new ResponseEntity<>("OK", HttpStatus.OK);	
+		} else {
+			return new ResponseEntity<>("올바른 이메일 주소를 입력하세요.", HttpStatus.NOT_ACCEPTABLE);
+		}
 	}
 	
 	private boolean isEmail(String addr) {

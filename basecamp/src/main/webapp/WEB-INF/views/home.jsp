@@ -52,7 +52,12 @@
 	                	<h3 class="panel-title">${article.email}</h3>
 	                </div>
 	                <div class="panel-body">
-	                	${article.content}
+	                	<p>
+	                		작성 시간 : ${article.createdDate}
+	                	</p>
+	                	<p>
+	                		${article.content}
+	                	</p>
 	                </div>
 	            </div>
 			</c:forEach>
