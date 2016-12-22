@@ -70,9 +70,10 @@
 		function newArticle(){
 			//console.log($("#inputEmail").val());
 			if (!($("#inputEmail").val()) || !($("#inputPassword").val()) || !($("#inputText").val())) {
-				console.log("null");
+				//console.log("null");
+				alert("빈 칸이 없어야 합니다.");
 			} else if (!isEmail($("#inputEmail").val())) {
-				console.log("not email!!");
+				alert("올바른 이메일을 입력하세요.");
 			} else {
 				$.ajax({
 					type: 'POST',
@@ -86,8 +87,9 @@
 					},
 					//dataType: "json",
 					error: function(data) {
-						console.log("ERROR!");
+						//console.log("ERROR!");
 						console.log(data);
+						alert(data);
 					}
 				});	
 			}
