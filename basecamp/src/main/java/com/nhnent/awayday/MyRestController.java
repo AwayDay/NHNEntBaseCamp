@@ -1,6 +1,7 @@
 package com.nhnent.awayday;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nhnent.awayday.dao.ArticleDAO;
 import com.nhnent.awayday.dto.ArticleDTO;
+import com.nhnent.awayday.dto.UpdateArticlePutDTO;
 
 @RestController
 public class MyRestController {
@@ -55,7 +58,13 @@ public class MyRestController {
 	}
 	
 	@RequestMapping(value = "/article/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateArticle(@PathVariable int id, @RequestParam("password") String password){
+	public ResponseEntity<?> updateArticle(@PathVariable int id, @RequestBody UpdateArticlePutDTO articlePutDTO
+			/*@RequestParam("password") String password, @RequestParam("content") String content*/){
+		logger.info("hello PUT!");
+		logger.info("id : {}", id);
+		logger.info("data : {}", articlePutDTO.toString());
+		logger.info("Your password : {}", articlePutDTO.getPassword());
+		logger.info("Your text : {}", articlePutDTO.getContent());
 		return new ResponseEntity<>("OK", HttpStatus.OK);	
 	}
 }

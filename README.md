@@ -170,3 +170,28 @@ post에서 json 받을 것은 없는 일이니 해당 옵션을 지워버렸다.
 # 목록 불러오기(#2)를 해 봅시다.
 * /에 접근하면
 * 서버는 방명록 글들을 페이지에 랜더하여 던져준다.
+
+# 글 수정하기(#3)을 해 보고 싶은데.
+* /article/{id} 에 패스워드와 컨텐츠를 들고 PUT로 접근하면
+* 서버는 비밀번호 맞나 확인하고 에러나 200(db 수정을 수반한)을 돌려줘야 한다.
+* 끝.
+
+## PUT에서 데이터를 못 받는다니 이게 무슨 소리요 의사양반
+* @RequestParam << 만악의 근원
+* POST에서나 잘 굴러가지 이거 나머지 메서드에선 안 된다 안 돼
+* 그럼?
+* @RequestBody 써서 요청 body 한꺼번에 받으면 됩니다.
+* 보통 잭슨 라이브러리 추가해서 json 해석 후 Map나 자바빈으로 변환함.
+```xml
+<!-- jackson -->
+<dependency>
+        <groupId>org.codehaus.jackson</groupId>
+        <artifactId>jackson-mapper-asl</artifactId>
+        <version>1.9.13</version>
+</dependency>
+<dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>2.4.4</version>
+</dependency>
+```
