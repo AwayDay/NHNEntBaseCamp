@@ -1,5 +1,7 @@
 # NHNEntBaseCamp
-NHN 엔터테인먼트 입사 전 사전 과제
+NHN 엔터테인먼트 입사 전 과제
+
+이 리드미에 나의 무능함과 멍청함이 모두 담겨있다(덩실).
 
 ----
 
@@ -10,11 +12,36 @@ NHN 엔터테인먼트 입사 전 사전 과제
 
 ## 프로젝트를 생성하고
 * 메이븐 pom 파일 수정 - 라이브러리 버전(전부 릴리즈로 하니 괜찮더라.), 자바 버전 수정
-* 프로젝트의 JRE 시스템 라이브러리(기본값 : 1.6) 최신화
+* 자바 버전 최신화
+```xml
+<properties>
+        <java-version>1.8</java-version>
+        <org.springframework-version>RELEASE</org.springframework-version>
+        <org.aspectj-version>RELEASE</org.aspectj-version>
+        <org.slf4j-version>RELEASE</org.slf4j-version>
+</properties>
+```
+```xml
+<plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.5.1</version>
+        <configuration>
+                <source>1.8</source>
+                <target>1.8</target>
+                <compilerArgument>-Xlint:all</compilerArgument>
+                <showWarnings>true</showWarnings>
+                <showDeprecation>true</showDeprecation>
+        </configuration>
+</plugin>
+```
 * 서버 생성(톰캣 9)
-* 실행 해보고 안 되면 .m2를 예쁘게 날리고 프로젝트 업데이트 해서 라이브러리를 다시 받아본다
-* 실행하면, 어머나 예뻐라
-* 한글이 깨져 나오니 인코딩 부분만 수정해주자 >> 완료!
+* 서버 실행 > 에러시 아래 참조, 서블릿 버전을 수정하거나(톰캣 다운) / 라이브러리 버전을 확인하고 다시 다운받으면 해결(404에러)되었다.
+* 실행
+* 한글 출력을 위해 인코딩 설정을 하자.
+```html
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+```
 
 # 실행 문제 해결하기
 
@@ -27,15 +54,15 @@ NHN 엔터테인먼트 입사 전 사전 과제
 * 문제는 https://github.com/AwayDay/NHNEntBaseCamp/issues/7 참조
 * 해결함! >> 라이브러리 버전 문제였음, .m2 폴더 날려서 새로 받는게 마음 편할거임.
 
-# 프로젝트를 만들고 실행도 해 봤으면 무엇을 해야 하느냐?
+# 프로젝트 진행 전 공부해볼 것들.
 1. 서버에서 어떻게 요청을 접수하는지 알 필요가 있다. - get / post
-2. 스프링 - MySQL 연동법을 알 필요가 있다.
-3. 마이바티스는 뭐 하는 친구래요?
-4. 설마 부트스트랩을 못 쓰진 않겠지?
-5. 오랜만에 자바스트립트를 만져봐야 한다.... 아니, 이런, 제이쿼리네.
-6. 그러고 보니 JSP 사용법도 익혀야 함.
-7. 테스트 케이스도 생각해보자.
-8. 트레비스도 연동해야지
+2. 스프링 - MySQL 연동법을 알 필요가 있다. : 마이바티스 연동할 때 딸려서 같이 하게 됨.
+3. 마이바티스는 뭐 하는 친구래요? : SQL 쿼리를 안전하고 편하게 다룰 수 있게 한 친구임.
+4. 설마 부트스트랩을 못 쓰진 않겠지? : 너무 잘 되어서 오히려 놀라움
+5. 오랜만에 자바스트립트를 만져봐야 한다.... 아니, 이런, 제이쿼리네. : 눈을 떠라 눈을 떠라 내 안에 잠든 미래
+6. 그러고 보니 JSP 사용법도 익혀야 함. : 제이드님의 너른 품에 안기고 싶다.
+7. 테스트 케이스도 생각해보자. : SQL 삽입은 도대체 뭘 해봐야 할까
+8. 트레비스도 연동해야지 : 연동했다! // java1.8을 위한 설정이 추가적으로 필요함.
 
 # 글 쓰기(#1)를 해결해봅시다.
 * 사용자는 폼에 아이디, 비밀번호, 글 내용을 입력한 후 전송 버튼을 누른다
@@ -55,10 +82,12 @@ NHN 엔터테인먼트 입사 전 사전 과제
 ```java
 @RequestParam("name") String name, ...
 ```
-* 그런데 지금 내 설계가 설계라, 클라이언트한테 뭔가.... 그, 답변을 보내고 싶은데 말이지.
-* 그것을 좀 생각해 볼 필요가 있겠다. 정상처리면 200, 서버 에러면 500, 하는 느낌으로.
-* 에러 코드 넣는 김에 REST 문서들 다시 한 번 찾아볼 필요도 있다
-* 그러고보니, 스프링엔 REST 지원 따로 없음?
+* 클라이언트에게 응답하기(200)
+```java
+public ResponseEntity<?> Class(){
+        return new ResponseEntity<>(HttpStatus.OK);
+}
+```
 
 ## MySQL MyBatis 연동하기
 * pom.xml에 적절한 디펜던시를 넣는다
@@ -164,8 +193,7 @@ NHN 엔터테인먼트 입사 전 사전 과제
 ## 트러블슈팅
 * 서버에서 200 던져줘도 클라에서 에러라고 해요 : 
 [참조](https://www.mkyong.com/jquery/jquery-ajax-request-return-200-ok-but-error-event-is-fired/), 
-ajax의 데이터 타입을 json으로 했으면 무조건 서버에서 json 형태로 보내줘야 하나보다. 
-post에서 json 받을 것은 없는 일이니 해당 옵션을 지워버렸다.
+ajax의 dataType을 json으로 했으면 무조건 서버에서 json 형태로 응답을 보내줘야 한다.
 
 # 목록 불러오기(#2)를 해 봅시다.
 * /에 접근하면
