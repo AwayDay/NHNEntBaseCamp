@@ -1,14 +1,14 @@
 package com.nhnent.awayday.dto;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class ArticleDTO {
 	private int id;
 	private String email;
 	private String password;
 	private String content;
-	private Date createdDate;
-	private Date updatedDate;
+	private Timestamp createdDate;
+	private Timestamp updatedDate;
 	
 	public int getId() {
 		return id;
@@ -22,10 +22,10 @@ public class ArticleDTO {
 	public String getPassword() {
 		return password;
 	}
-	public Date getCreatedDate() {
+	public Timestamp getCreatedDate() {
 		return createdDate;
 	}
-	public Date getUpdatedDate() {
+	public Timestamp getUpdatedDate() {
 		return updatedDate;
 	}
 	
@@ -41,10 +41,10 @@ public class ArticleDTO {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(Timestamp createdDate) {
 		this.createdDate = createdDate;
 	}
-	public void setUpdatedDate(Date updatedDate) {
+	public void setUpdatedDate(Timestamp updatedDate) {
 		this.updatedDate = updatedDate;
 	}
 	
