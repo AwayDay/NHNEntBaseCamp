@@ -195,3 +195,6 @@ post에서 json 받을 것은 없는 일이니 해당 옵션을 지워버렸다.
         <version>2.4.4</version>
 </dependency>
 ```
+
+## 위에서 하라는 것 다 했는데 나오는 415는 뭐 하는 에러냐
+* 너가 contentType: 'application/json' 옵션을 안 넣었다에 100원 걸 수 있음.
