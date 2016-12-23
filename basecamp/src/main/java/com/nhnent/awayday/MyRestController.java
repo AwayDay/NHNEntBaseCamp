@@ -1,5 +1,6 @@
 package com.nhnent.awayday;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,7 +42,13 @@ public class MyRestController {
 			article.setPassword(password);
 			article.setContent(content);
 			
-			articleDAO.insertArticle(article);
+			try {
+				articleDAO.insertArticle(article);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
 			
 			return new ResponseEntity<>("OK", HttpStatus.OK);	
 		} else {
@@ -51,7 +58,9 @@ public class MyRestController {
 	
 	public boolean isEmail(String addr) {
 		if (addr.split("@").length == 2){
-			return true;
+			if(addr.split("@")[1].length() > 0){
+				return true;
+			}
 		}
 		return false;
 	}
@@ -67,6 +76,8 @@ public class MyRestController {
 		
 		//logger.info("article's password : {}", articleDAO.selectArticlePassword(id));
 		if(isCorrectPassword(id, articleDTO.getPassword())){
+			articleDTO.setId(id);
+			
 			return new ResponseEntity<>("OK", HttpStatus.OK);	
 		} else {
 			return new ResponseEntity<>("비밀번호가 일치하지 않습니다.", HttpStatus.NOT_ACCEPTABLE);	
