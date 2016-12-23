@@ -58,13 +58,13 @@ public class MyRestController {
 	}
 	
 	@RequestMapping(value = "/article/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateArticle(@PathVariable int id, @RequestBody UpdateArticlePutDTO articlePutDTO
+	public ResponseEntity<?> updateArticle(@PathVariable int id, @RequestBody ArticleDTO articleDTO
 			/*@RequestParam("password") String password, @RequestParam("content") String content*/){
 		logger.info("hello PUT!");
 		logger.info("id : {}", id);
-		logger.info("data : {}", articlePutDTO.toString());
-		logger.info("Your password : {}", articlePutDTO.getPassword());
-		logger.info("Your text : {}", articlePutDTO.getContent());
+		logger.info("data : {}", articleDTO.toString());
+		logger.info("Your password : {}", articleDTO.getPassword());
+		logger.info("Your text : {}", articleDTO.getContent());
 		return new ResponseEntity<>("OK", HttpStatus.OK);	
 	}
 }

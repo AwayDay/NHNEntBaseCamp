@@ -55,13 +55,9 @@
 	                	<p>
 	                		작성 시간 : ${article.createdDate}
 	                	</p>
-	                	<p class="articleContent">
-	                		${article.content}
-	                	</p>
+	                	<p class="articleContent">${article.content}</p>
 	                	<button type="button" class="btn btn-default btn-block" 
-	                	data-toggle="modal" data-target="#updateModal" data-id="${article.id}">
-	                		수정하기
-	                	</button>
+	                	data-toggle="modal" data-target="#updateModal" data-id="${article.id}">수정하기</button>
 	                </div>
 	            </div>
 			</c:forEach>
@@ -148,7 +144,7 @@
 			var content = $("#"+id+" .articleContent").text();
 			
 			var modal = $("#updateModal");
-			console.log(id);
+			//console.log(content);
 			modal.find('.modal-footer button').val(id);
 			modal.find('.modal-body #updateText').val(content);
 		})

@@ -9,4 +9,12 @@
 	<select id="selectAllArticle" resultType="com.nhnent.awayday.dto.ArticleDTO">
 		SELECT * FROM ARTICLE ORDER BY createdDate DESC
 	</select>
+	<update id="updateArticle">
+		UPDATE ARTICLE
+		SET
+			content = #{content},
+			updatedDate = NOW()
+		WHERE
+			id = #{id}
+	</update>
 </mapper>
