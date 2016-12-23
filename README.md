@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/AwayDay/NHNEntBaseCamp.svg?branch=master)](https://travis-ci.org/AwayDay/NHNEntBaseCamp)
+
 # NHNEntBaseCamp
 NHN 엔터테인먼트 입사 전 과제
 
