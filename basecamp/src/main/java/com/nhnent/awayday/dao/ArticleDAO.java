@@ -7,4 +7,5 @@ import com.nhnent.awayday.dto.ArticleDTO;
 public interface ArticleDAO {
 	public void insertArticle(ArticleDTO article);
 	public List<ArticleDTO> selectAllArticle();
+	public String selectArticlePassword(int id);
 }

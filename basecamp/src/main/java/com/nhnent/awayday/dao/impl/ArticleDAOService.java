@@ -25,4 +25,9 @@ public class ArticleDAOService implements ArticleDAO {
 		return sqlSession.selectList("articleSQL.selectAllArticle");
 	}
 
+	@Override
+	public String selectArticlePassword(int id) {
+		return sqlSession.selectOne("articleSQL.selectAnArticlePassword", id);
+	}
+
 }

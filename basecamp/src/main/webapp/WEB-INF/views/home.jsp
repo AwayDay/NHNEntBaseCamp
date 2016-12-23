@@ -122,7 +122,7 @@
 					error: function(data) {
 						//console.log("ERROR!");
 						console.log(data);
-						alert(data);
+						alert(data.responseText);
 					}
 				});	
 			}
@@ -150,9 +150,9 @@
 		})
 			
 		function updateArticle(id){
-			console.log(id);
-			console.log($("#confirmPassword").val());
-			console.log($("#updateText").val());
+			//console.log(id);
+			//console.log($("#confirmPassword").val());
+			//console.log($("#updateText").val());
 			var update = {}; 
 			update.password = $("#confirmPassword").val();
 			update.content = $("#updateText").val();
@@ -168,7 +168,7 @@
 				contentType: 'application/json',
 				error: function(data) {
 					console.log(data);
-					alert(data);
+					alert(data.responseText);
 				}
 			});
 		}

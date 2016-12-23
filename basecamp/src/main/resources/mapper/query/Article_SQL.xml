@@ -9,6 +9,11 @@
 	<select id="selectAllArticle" resultType="com.nhnent.awayday.dto.ArticleDTO">
 		SELECT * FROM ARTICLE ORDER BY createdDate DESC
 	</select>
+	
+	<select id="selectAnArticlePassword" resultType="string">
+		SELECT password FROM ARTICLE WHERE id = #{id}
+	</select>
+	
 	<update id="updateArticle">
 		UPDATE ARTICLE
 		SET

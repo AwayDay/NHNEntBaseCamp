@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nhnent.awayday.dao.ArticleDAO;
 import com.nhnent.awayday.dto.ArticleDTO;
-import com.nhnent.awayday.dto.UpdateArticlePutDTO;
 
 @RestController
 public class MyRestController {
@@ -50,7 +49,7 @@ public class MyRestController {
 		}
 	}
 	
-	private boolean isEmail(String addr) {
+	public boolean isEmail(String addr) {
 		if (addr.split("@").length == 2){
 			return true;
 		}
@@ -65,6 +64,19 @@ public class MyRestController {
 		logger.info("data : {}", articleDTO.toString());
 		logger.info("Your password : {}", articleDTO.getPassword());
 		logger.info("Your text : {}", articleDTO.getContent());
-		return new ResponseEntity<>("OK", HttpStatus.OK);	
+		
+		//logger.info("article's password : {}", articleDAO.selectArticlePassword(id));
+		if(isCorrectPassword(id, articleDTO.getPassword())){
+			return new ResponseEntity<>("OK", HttpStatus.OK);	
+		} else {
+			return new ResponseEntity<>("비밀번호가 일치하지 않습니다.", HttpStatus.NOT_ACCEPTABLE);	
+		}
+	}
+	
+	public boolean isCorrectPassword(int id, String pw){
+		if(pw.equals(articleDAO.selectArticlePassword(id))){
+			return true;
+		}
+		return false;
 	}
 }
