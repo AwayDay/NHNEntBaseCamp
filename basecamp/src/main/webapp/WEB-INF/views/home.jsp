@@ -82,7 +82,7 @@
 								</div>
 								<div class="form-group">
 									<label for="inputText">내용</label>
-									<textarea type="text" rows="5" class="form-control" id="updateText"></textarea>
+									<textarea type="text" rows="5" class="form-control" id="updateTextArea"></textarea>
 								</div>
 							</form>
 						</div>
@@ -146,16 +146,17 @@
 			var modal = $("#updateModal");
 			//console.log(content);
 			modal.find('.modal-footer button').val(id);
-			modal.find('.modal-body #updateText').val(content);
+			modal.find('#updateTextArea').val(content);
 		})
 			
 		function updateArticle(id){
-			//console.log(id);
-			//console.log($("#confirmPassword").val());
-			//console.log($("#updateText").val());
+			console.log(id);
+			console.log($("#confirmPassword").val());
+			console.log($("#updateTextArea").val());
 			var update = {}; 
 			update.password = $("#confirmPassword").val();
-			update.content = $("#updateText").val();
+			update.content = $("#updateTextArea").val();
+			console.log(update.content);
 			
 			$.ajax({
 				type: 'PUT',

@@ -9,4 +9,5 @@ public interface ArticleDAO {
 	public void insertArticle(ArticleDTO article) throws SQLException;
 	public List<ArticleDTO> selectAllArticle();
 	public String selectArticlePassword(int id);
+	public void  updateArticle(ArticleDTO article);
 }

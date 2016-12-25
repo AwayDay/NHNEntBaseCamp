@@ -1,8 +1,6 @@
 package com.nhnent.awayday;
 
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +25,7 @@ public class MyRestController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MyRestController.class);
 	
-	@RequestMapping(value = "/article", method = RequestMethod.POST)
+	@RequestMapping(value = "/article", method = RequestMethod.POST, produces="application/json; charset=utf8")
 	public ResponseEntity<?> newArticle(@RequestParam("email") String email,@RequestParam("password") String password, @RequestParam("content") String content) {
 		logger.info("hello POST!");
 		
@@ -45,7 +43,6 @@ public class MyRestController {
 			try {
 				articleDAO.insertArticle(article);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
@@ -65,12 +62,12 @@ public class MyRestController {
 		return false;
 	}
 	
-	@RequestMapping(value = "/article/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/article/{id}", method = RequestMethod.PUT, produces="application/json; charset=utf8")
 	public ResponseEntity<?> updateArticle(@PathVariable int id, @RequestBody ArticleDTO articleDTO
 			/*@RequestParam("password") String password, @RequestParam("content") String content*/){
 		logger.info("hello PUT!");
 		logger.info("id : {}", id);
-		logger.info("data : {}", articleDTO.toString());
+		//logger.info("data : {}", articleDTO.toString());
 		logger.info("Your password : {}", articleDTO.getPassword());
 		logger.info("Your text : {}", articleDTO.getContent());
 		
@@ -78,7 +75,8 @@ public class MyRestController {
 		if(isCorrectPassword(id, articleDTO.getPassword())){
 			articleDTO.setId(id);
 			
-			return new ResponseEntity<>("OK", HttpStatus.OK);	
+			articleDAO.updateArticle(articleDTO);
+			return new ResponseEntity<>("성공", HttpStatus.OK);	
 		} else {
 			return new ResponseEntity<>("비밀번호가 일치하지 않습니다.", HttpStatus.NOT_ACCEPTABLE);	
 		}
