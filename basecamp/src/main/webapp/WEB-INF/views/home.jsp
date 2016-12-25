@@ -55,6 +55,9 @@
 	                	<p>
 	                		작성 시간 : ${article.createdDate}
 	                	</p>
+	                	<c:if test="${article.updatedDate != null}">
+	                		<p>수정 시간 : ${article.updatedDate}</p>
+	                	</c:if>
 	                	<p class="articleContent">${article.content}</p>
 	                	<button type="button" class="btn btn-default btn-block" 
 	                	data-toggle="modal" data-target="#updateModal" data-id="${article.id}">수정하기</button>

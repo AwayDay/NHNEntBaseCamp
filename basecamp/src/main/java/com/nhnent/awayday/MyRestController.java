@@ -63,8 +63,7 @@ public class MyRestController {
 	}
 	
 	@RequestMapping(value = "/article/{id}", method = RequestMethod.PUT, produces="application/json; charset=utf8")
-	public ResponseEntity<?> updateArticle(@PathVariable int id, @RequestBody ArticleDTO articleDTO
-			/*@RequestParam("password") String password, @RequestParam("content") String content*/){
+	public ResponseEntity<?> updateArticle(@PathVariable int id, @RequestBody ArticleDTO articleDTO){
 		logger.info("hello PUT!");
 		logger.info("id : {}", id);
 		//logger.info("data : {}", articleDTO.toString());
