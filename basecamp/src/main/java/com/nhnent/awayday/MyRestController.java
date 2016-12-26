@@ -33,7 +33,12 @@ public class MyRestController {
 		logger.info("Your password : {}", password);
 		logger.info("Your text : {}", content);
 		
-		if(isEmail(email)){
+		EmailCheck ec = (e) -> {
+			String list[] = e.split("@");
+			return ((list.length) == 2)&&(list[list.length-1].length() != 0);
+			};
+		
+		if (ec.isEmail(email)) {
 			ArticleDTO article = new ArticleDTO();
 			
 			article.setEmail(email);

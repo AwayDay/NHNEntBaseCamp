@@ -10,4 +10,5 @@ public interface ArticleDAO {
 	public List<ArticleDTO> selectAllArticle();
 	public String selectArticlePassword(int id);
 	public void  updateArticle(ArticleDTO article);
+	public List<ArticleDTO> selectAllUpdatedArticle();
 }
