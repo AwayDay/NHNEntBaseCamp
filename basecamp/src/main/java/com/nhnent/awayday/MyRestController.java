@@ -32,46 +32,48 @@ public class MyRestController {
 		logger.info("Your E-mail addr : {}", email);
 		logger.info("Your password : {}", password);
 		logger.info("Your text : {}", content);
-		
-		EmailCheck ec = (e) -> {
-			String list[] = e.split("@");
-			return ((list.length) == 2)&&(list[list.length-1].length() != 0);
+			
+		if (isCorrectForm(email, password, content)){
+			EmailCheck ec = (e) -> {
+				String list[] = e.split("@");
+				return ((list.length) == 2)&&(list[list.length-1].length() != 0)&&(list[0].length() != 0);
 			};
-		
-		if (ec.isEmail(email)) {
-			ArticleDTO article = new ArticleDTO();
-			
-			article.setEmail(email);
-			article.setPassword(password);
-			article.setContent(content);
-			
-			try {
-				articleDAO.insertArticle(article);
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+			if (ec.isEmail(email)) {
+				ArticleDTO article = new ArticleDTO();
+				article.setEmail(email);
+				article.setPassword(password);
+				article.setContent(content);
+				try {
+					articleDAO.insertArticle(article);
+				} catch (SQLException e) {
+					e.printStackTrace();
+					return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+				return new ResponseEntity<>("OK", HttpStatus.OK);	
+			} else {
+				return new ResponseEntity<>("올바른 이메일 주소를 입력하세요.", HttpStatus.BAD_REQUEST);
 			}
-			
-			return new ResponseEntity<>("OK", HttpStatus.OK);	
 		} else {
-			return new ResponseEntity<>("올바른 이메일 주소를 입력하세요.", HttpStatus.NOT_ACCEPTABLE);
+			return new ResponseEntity<>("비어있는 칸이 없어야 합니다.", HttpStatus.BAD_REQUEST);
 		}
 	}
 	
+	public boolean isCorrectForm(String email, String password, String content){
+		return email != null && password != null && content != null;
+	}
+	
 	public boolean isEmail(String addr) {
-		if (addr.split("@").length == 2){
-			if(addr.split("@")[1].length() > 0){
-				return true;
-			}
-		}
-		return false;
+		EmailCheck ec = (e) -> {
+			String list[] = e.split("@");
+			return ((addr!=null)&&(list.length) == 2)&&(list[list.length-1].length() != 0)&&(list[0].length() != 0);
+		};
+		return ec.isEmail(addr);
 	}
 	
 	@RequestMapping(value = "/article/{id}", method = RequestMethod.PUT, produces="application/json; charset=utf8")
 	public ResponseEntity<?> updateArticle(@PathVariable int id, @RequestBody ArticleDTO articleDTO){
 		logger.info("hello PUT!");
 		logger.info("id : {}", id);
-		//logger.info("data : {}", articleDTO.toString());
 		logger.info("Your password : {}", articleDTO.getPassword());
 		logger.info("Your text : {}", articleDTO.getContent());
 		
@@ -82,7 +84,7 @@ public class MyRestController {
 			articleDAO.updateArticle(articleDTO);
 			return new ResponseEntity<>("성공", HttpStatus.OK);	
 		} else {
-			return new ResponseEntity<>("비밀번호가 일치하지 않습니다.", HttpStatus.NOT_ACCEPTABLE);	
+			return new ResponseEntity<>("비밀번호가 일치하지 않습니다.", HttpStatus.UNAUTHORIZED);	
 		}
 	}
 	
