@@ -8,10 +8,10 @@ import org.junit.Test;
 import com.nhnent.awayday.MyRestController;
 
 public class TestCase {
-	MyRestController myRestController;
+	static MyRestController myRestController;
 	
 	@BeforeClass
-	public void beforeTask(){
+	public static void beforeTask(){
 		myRestController = new MyRestController();
 	}
 	
