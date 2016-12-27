@@ -59,13 +59,13 @@ public class MyRestController {
 	}
 	
 	public boolean isCorrectForm(String email, String password, String content){
-		return email != null && password != null && content != null;
+		return !email.isEmpty() && !password.isEmpty() && !content.isEmpty();
 	}
 	
 	public boolean isEmail(String addr) {
 		EmailCheck ec = (e) -> {
 			String list[] = e.split("@");
-			return ((addr!=null)&&(list.length) == 2)&&(list[list.length-1].length() != 0)&&(list[0].length() != 0);
+			return ((!addr.isEmpty())&&(list.length) == 2)&&(list[list.length-1].length() != 0)&&(list[0].length() != 0);
 		};
 		return ec.isEmail(addr);
 	}
