@@ -1,6 +1,8 @@
 package com.nhnent.awayday;
 
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +34,8 @@ public class MyRestController {
 		logger.info("Your E-mail addr : {}", email);
 		logger.info("Your password : {}", password);
 		logger.info("Your text : {}", content);
+		
+		Map<String, String> map = new HashMap<>();
 			
 		if (isCorrectForm(email, password, content)){
 			EmailCheck ec = (e) -> {
@@ -49,7 +53,8 @@ public class MyRestController {
 					e.printStackTrace();
 					return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
 				}
-				return new ResponseEntity<>("OK", HttpStatus.OK);	
+				map.put("message", "등록 성공");
+				return new ResponseEntity<>(map, HttpStatus.CREATED);	
 			} else {
 				return new ResponseEntity<>("올바른 이메일 주소를 입력하세요.", HttpStatus.BAD_REQUEST);
 			}
@@ -77,21 +82,25 @@ public class MyRestController {
 		logger.info("Your password : {}", articleDTO.getPassword());
 		logger.info("Your text : {}", articleDTO.getContent());
 		
-		//logger.info("article's password : {}", articleDAO.selectArticlePassword(id));
-		if(isCorrectPassword(id, articleDTO.getPassword())){
-			articleDTO.setId(id);
-			
-			articleDAO.updateArticle(articleDTO);
-			return new ResponseEntity<>("성공", HttpStatus.OK);	
-		} else {
-			return new ResponseEntity<>("비밀번호가 일치하지 않습니다.", HttpStatus.UNAUTHORIZED);	
+		Map<String, String> map = new HashMap<>();
+		
+		try {
+			if (!articleDTO.getPassword().isEmpty() && articleDTO.getPassword().equals(articleDAO.selectArticlePassword(id))) {
+				articleDTO.setId(id);
+				
+				articleDAO.updateArticle(articleDTO);
+								
+				map.put("message", "성공");
+				return new ResponseEntity<>(map, HttpStatus.OK);	
+			} else {
+				//map.put("message", "비밀번호가 일치하지 않습니다.");
+				return new ResponseEntity<>("비밀번호가 일치하지 않습니다.", HttpStatus.UNAUTHORIZED);	
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			//map.put("message", "존재하지 않는 글입니다.");
+			return new ResponseEntity<>(e, HttpStatus.NOT_FOUND);
 		}
-	}
-	
-	public boolean isCorrectPassword(int id, String pw){
-		if(pw.equals(articleDAO.selectArticlePassword(id))){
-			return true;
-		}
-		return false;
 	}
 }

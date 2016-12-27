@@ -116,7 +116,7 @@
 					url: "/article",
 					data: {"email":$("#inputEmail").val(), "password":$("#inputPassword").val(), "content":$("#inputText").val()},
 					success: function(data) {
-						console.log(data);
+						console.log(data.message);
 						$("#inputEmail").val("");
 						$("#inputPassword").val("");
 						$("#inputText").val("");
@@ -125,7 +125,7 @@
 					error: function(data) {
 						//console.log("ERROR!");
 						console.log(data);
-						alert(data.responseText);
+						alert(data.status + ": " + (data.responseText));
 					}
 				});	
 			}
@@ -166,13 +166,13 @@
 				url: "/article/"+id,
 				data: JSON.stringify(update),
 				success: function(data) {
-					console.log(data);
+					console.log(data.message);
 				},
 				//dataType: "json",
 				contentType: 'application/json',
 				error: function(data) {
 					console.log(data);
-					alert(data.responseText);
+					alert(data.status + ": " + data.responseText);
 				}
 			});
 		}

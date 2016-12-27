@@ -48,13 +48,17 @@ NHN 엔터테인먼트 입사 전 과제
 # 실행 문제 해결하기
 
 ## Tomcat 작동 불가 문제
+* __에러 로그__ : 으악 까먹었다
 * https://slipp.net/questions/208 참조
 * http://kindlybugs.com/279 이런 해결 방법도 있다. 무엇이건 간에 참 골치가 아픈 녀석이다.
 * 서블릿 버전 문제였던 것 같다.
 
 ## 404 Error 문제 
+* __에러 로그__ : 으악 까먹었다
+* __에러 상황__ : 톰캣 구동 - 구동 성공 - 에러 발생(에러 로그 발생) - 스프링 동작 안 함 - 로컬호스트 등 적절한 주소로 접근해도 404 에러 발생(페이지를 렌더하지 못함)
 * 문제는 https://github.com/AwayDay/NHNEntBaseCamp/issues/7 참조
 * 해결함! >> 라이브러리 버전 문제였음, .m2 폴더 날려서 새로 받는게 마음 편할거임.
+* __해결법__ : (어디까지나 내 이야기)일부 최신화 되지 못한 jar 라이브러리 파일이 잔류해 있어서 발생한 문제, 해당 라이브러리를 제거하고 maven으로 다시 동기화 하면 해결.
 
 # 프로젝트 진행 전 공부해볼 것들.
 1. 서버에서 어떻게 요청을 접수하는지 알 필요가 있다. - get / post
@@ -193,9 +197,9 @@ public ResponseEntity<?> Class(){
 * json 응답을 안 한다면 별 상관이 없을지도 모르는데, 그래도 지금 아니면 언제 **연습** 해보겠어.
 
 ## 트러블슈팅
-* 서버에서 200 던져줘도 클라에서 에러라고 해요 : 
-[참조](https://www.mkyong.com/jquery/jquery-ajax-request-return-200-ok-but-error-event-is-fired/), 
-ajax의 dataType을 json으로 했으면 무조건 서버에서 json 형태로 응답을 보내줘야 한다.
+* __문제점__ : 서버에서 200 던져줘도 클라에서 에러라고 해요 : 
+* [참조](https://www.mkyong.com/jquery/jquery-ajax-request-return-200-ok-but-error-event-is-fired/), 
+* __해결법__ : ajax의 dataType 옵션을 json으로 했으면 무조건 서버에서 json 형태로 응답을 보내줘야 한다.
 
 # 목록 불러오기(#2)를 해 봅시다.
 * /에 접근하면
@@ -208,10 +212,10 @@ ajax의 dataType을 json으로 했으면 무조건 서버에서 json 형태로 �
 
 ## PUT에서 데이터를 못 받는다니 이게 무슨 소리요 의사양반
 * @RequestParam << 만악의 근원
-* POST에서나 잘 굴러가지 이거 나머지 메서드에선 안 된다 안 돼
+* __문제점__ : @RequestParam은 POST에서__만__ 굴러감
 * 그럼?
-* @RequestBody 써서 요청 body 한꺼번에 받으면 됩니다.
-* 보통 잭슨 라이브러리 추가해서 json 해석 후 Map나 자바빈으로 변환함.
+* __해결법__ : @RequestBody 써서 요청 body를 한꺼번에 받자.
+* 보통 잭슨 라이브러리와 같은 json 처기 가능한 라이브러리를 추가해서 json 해석 후 Map이나 자바빈으로 변환함.(자동으로 해준다.)
 ```xml
 <!-- jackson -->
 <dependency>
@@ -227,4 +231,43 @@ ajax의 dataType을 json으로 했으면 무조건 서버에서 json 형태로 �
 ```
 
 ## 위에서 하라는 것 다 했는데 나오는 415는 뭐 하는 에러냐
-* 너가 contentType: 'application/json' 옵션을 안 넣었다에 100원 걸 수 있음.
+* __문제점__ : ajax 요청할 때 요청 data의 타입을 지정하지 않음
+* 클라이언트 : 내가 개떡같이 말해도 json으로 알아듣겠지?
+* 서버 : (어리둥절)
+* __해결법__ : contentType: 'application/json' 옵션을 넣자!
+
+# 기타 에러들
+## #17 statusText : "parsererror" : 분명 코드는 200인데 ajax는 error 루틴을 돌리고 있음
+* 유니코드 처리를 위해 RequestMapping 애노테이션에 produces 옵션을 사용
+```java
+// 나는 json 타입으로 응답할거고 인코딩은 유니코드야 
+@RequestMapping(value = "/뭔가 자원", method = RequestMethod.POST, produces="application/json; charset=utf8")
+```
+* 문제점 : ResponseEntity 자체는 json이 아니다
+```java
+// 뭐라뭐라뭐라는 플레인 텍스트지 json이 아니라우 동무.
+return new ResponseEntity<>("뭐라뭐라뭐라", HttpStatus.OK);
+```
+* 해결법 : json을 리스폰스 엔티티에 넣어주면 된다
+```java
+// 이러면 응답 내용에 json이 성공적으로 들어가게 된다.
+Map<String, String> map = new HashMap<>();
+map.put("message", "뭐라뭐라뭐라");
+return new ResponseEntity<>(map, HttpStatus.OK);
+```
+* 유의할 점 : json을 처리 가능한 적절한 라이브러리가 있어야 함 - 위에서 잘 찾으면 있다.
+
+# 기타 새롭게 발견한 기술들
+
+# 기타 감상
+
+## 람다
+* 람다식을 만지고 있으려니 자바스트립트에서 얻은 콜백-캔서가 재발함.
+* 그래서 프로젝트에는 간단하게 적용했음!
+* 공부하면서 아 이거 통하겠다 싶었던 부분은 역시 러너블.
+
+## 스트림
+* 큰 직관!
+* 큰 가독!
+* 그래 사람은 가끔씩 동사적으로도 생각할 필요가 있다.
+* 패러렐한 처리도 지원한다는데 이 프로젝트에선 컬렉션을 크게 다루는 것도 아니고 해서 시험해볼 수가 없었다.
