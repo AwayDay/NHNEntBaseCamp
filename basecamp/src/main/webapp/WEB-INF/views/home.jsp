@@ -120,6 +120,7 @@
 						$("#inputEmail").val("");
 						$("#inputPassword").val("");
 						$("#inputText").val("");
+						$("#articleList").load("/ #articleList");
 					},
 					//dataType: "json",
 					error: function(data) {
