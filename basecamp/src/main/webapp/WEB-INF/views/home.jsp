@@ -149,6 +149,7 @@
 			
 			var modal = $("#updateModal");
 			//console.log(content);
+			modal.find("#confirmPassword").val("");
 			modal.find('.modal-footer button').val(id);
 			modal.find('#updateTextArea').val(content);
 		})
@@ -168,6 +169,8 @@
 				data: JSON.stringify(update),
 				success: function(data) {
 					console.log(data.message);
+					$('#updateModal').modal('hide')
+					$("#articleList").load("/ #articleList");
 				},
 				//dataType: "json",
 				contentType: 'application/json',
