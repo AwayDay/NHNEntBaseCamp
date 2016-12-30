@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nhnent.awayday.JavaSecurity;
+import com.nhnent.awayday.JavaSecuritySHA256;
 import com.nhnent.awayday.StringCheck;
 import com.nhnent.awayday.dao.ArticleDAO;
 import com.nhnent.awayday.dto.ArticleDTO;
@@ -42,7 +44,8 @@ public class MyRestController {
 			if (isEmail(email)) {
 				ArticleDTO article = new ArticleDTO();
 				article.setEmail(email);
-				article.setPassword(password);
+				JavaSecurity js = new JavaSecuritySHA256();
+				article.setPassword(js.getEncrypt("test", password));
 				article.setContent(content);
 				try {
 					articleDAO.insertArticle(article);
@@ -84,9 +87,9 @@ public class MyRestController {
 		logger.info("Your text : {}", articleDTO.getContent());
 		
 		Map<String, String> map = new HashMap<>();
-		
+		JavaSecurity js = new JavaSecuritySHA256();
 		try {
-			if (!articleDTO.getPassword().isEmpty() && articleDTO.getPassword().equals(articleDAO.selectArticlePassword(id))) {
+			if (!articleDTO.getPassword().isEmpty() && js.getEncrypt("test", articleDTO.getPassword()).equals(articleDAO.selectArticlePassword(id))) {
 				articleDTO.setId(id);
 				
 				articleDAO.updateArticle(articleDTO);
