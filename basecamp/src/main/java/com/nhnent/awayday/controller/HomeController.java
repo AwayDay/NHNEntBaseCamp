@@ -1,4 +1,4 @@
-package com.nhnent.awayday;
+package com.nhnent.awayday.controller;
 
 import java.util.Locale;
 

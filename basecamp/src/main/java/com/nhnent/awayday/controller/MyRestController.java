@@ -1,4 +1,4 @@
-package com.nhnent.awayday;
+package com.nhnent.awayday.controller;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nhnent.awayday.StringCheck;
 import com.nhnent.awayday.dao.ArticleDAO;
 import com.nhnent.awayday.dto.ArticleDTO;
 
@@ -38,11 +39,7 @@ public class MyRestController {
 		Map<String, String> map = new HashMap<>();
 			
 		if (isCorrectForm(email, password, content)){
-			EmailCheck ec = (e) -> {
-				String list[] = e.split("@");
-				return ((list.length) == 2)&&(list[list.length-1].length() != 0)&&(list[0].length() != 0);
-			};
-			if (ec.isEmail(email)) {
+			if (isEmail(email)) {
 				ArticleDTO article = new ArticleDTO();
 				article.setEmail(email);
 				article.setPassword(password);
@@ -63,16 +60,20 @@ public class MyRestController {
 		}
 	}
 	
+	public ResponseEntity<?> newArticleFactory(){
+		Map<String, String> map = new HashMap<>();
+		map.put("message", "등록 성공");
+		return new ResponseEntity<>(map, HttpStatus.CREATED);
+	}
+	
 	public boolean isCorrectForm(String email, String password, String content){
 		return !email.isEmpty() && !password.isEmpty() && !content.isEmpty();
 	}
 	
 	public boolean isEmail(String addr) {
-		EmailCheck ec = (e) -> {
-			String list[] = e.split("@");
-			return ((!addr.isEmpty())&&(list.length) == 2)&&(list[list.length-1].length() != 0)&&(list[0].length() != 0);
-		};
-		return ec.isEmail(addr);
+		String emailFilter = "^[\\w]+[\\-_\\.]*@[\\w]+\\.[a-zA-Z]+$";
+		StringCheck ec = (f, e) -> e.matches(f);
+		return ec.isCorrectString(emailFilter, addr);
 	}
 	
 	@RequestMapping(value = "/article/{id}", method = RequestMethod.PUT, produces="application/json; charset=utf8")

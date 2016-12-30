@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.nhnent.awayday.MyRestController;
+import com.nhnent.awayday.controller.MyRestController;
 
 public class TestCase {
 	static MyRestController myRestController;
