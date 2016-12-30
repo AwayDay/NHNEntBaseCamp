@@ -9,14 +9,15 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.nhnent.awayday.dao.ArticleDAO;
+import com.nhnent.awayday.dao.impl.ArticleDAOService;
 import com.nhnent.awayday.dto.ArticleDTO;
 
 public class ArticleDAOTest {
-	@Autowired
 	private ArticleDAO articleDAO;
 	
 	@Test
 	public void testInsertArticle(){
+		articleDAO = new ArticleDAOService();
 		ArticleDTO article = new ArticleDTO();
 		article.setEmail("test@test.com");
 		article.setPassword("test");
@@ -30,7 +31,7 @@ public class ArticleDAOTest {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			fail();
+			fail(e.getMessage());
 		}
 	}
 }
