@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nhnent.awayday.StringCheck;
@@ -29,41 +28,34 @@ public class MyRestController {
 	private static final Logger logger = LoggerFactory.getLogger(MyRestController.class);
 	
 	@RequestMapping(value = "/article", method = RequestMethod.POST, produces="application/json; charset=utf8")
-	public ResponseEntity<?> newArticle(@RequestParam("email") String email,@RequestParam("password") String password, @RequestParam("content") String content) {
+	public ResponseEntity<?> newArticle(@RequestBody ArticleDTO articleDTO) {
 		logger.info("hello POST!");
 		
-		logger.info("Your E-mail addr : {}", email);
-		logger.info("Your password : {}", password);
-		logger.info("Your text : {}", content);
+		logger.info("Your E-mail addr : {}", articleDTO.getEmail());
+		logger.info("Your password : {}", articleDTO.getPassword());
+		logger.info("Your text : {}", articleDTO.getContent());
 		
+		return newArticleFactory(articleDTO);
+	}
+	
+	public ResponseEntity<?> newArticleFactory(ArticleDTO articleDTO){
 		Map<String, String> map = new HashMap<>();
-			
-		if (isCorrectForm(email, password, content)){
-			if (isEmail(email)) {
-				ArticleDTO article = new ArticleDTO();
-				article.setEmail(email);
-				article.setPassword(password);
-				article.setContent(content);
+		if (isCorrectForm(articleDTO.getEmail(), articleDTO.getPassword(), articleDTO.getContent())){
+			if (isEmail(articleDTO.getEmail())) {
 				try {
-					articleDAO.insertArticle(article);
+					articleDAO.insertArticle(articleDTO);
+					map.put("message", "등록 성공");
+					return new ResponseEntity<>(map, HttpStatus.CREATED);
 				} catch (SQLException e) {
 					e.printStackTrace();
 					return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
 				}
-				map.put("message", "등록 성공");
-				return new ResponseEntity<>(map, HttpStatus.CREATED);	
 			} else {
 				return new ResponseEntity<>("올바른 이메일 주소를 입력하세요.", HttpStatus.BAD_REQUEST);
 			}
 		} else {
-			return new ResponseEntity<>("비어있는 칸이 없어야 합니다.", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("비어있는 항목이 없어야 합니다.", HttpStatus.BAD_REQUEST);
 		}
-	}
-	
-	public ResponseEntity<?> newArticleFactory(){
-		Map<String, String> map = new HashMap<>();
-		map.put("message", "등록 성공");
-		return new ResponseEntity<>(map, HttpStatus.CREATED);
 	}
 	
 	public boolean isCorrectForm(String email, String password, String content){
