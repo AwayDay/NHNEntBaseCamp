@@ -14,7 +14,15 @@ service:
   - mysql
 
 before_script:
-  - mysql -u root -e "USE mysql; INSERT INTO user (Host, User, Password) VALUES ('localhost', 'testUser', password('test@testuser123')); INSERT INTO user (Host, User, Password) VALUES ('%', 'testUser', password('test@testuser123')); FLUSH privileges; CREATE DATABASE nhnentbasecamp; GRANT ALL privileges ON nhnentbasecamp.* TO testUser@locahost IDENTIFIED BY 'test@testuser123'; GRANT ALL privileges ON nhnentbasecamp.* TO testUser@'%' IDENTIFIED BY 'test@testuser123'; USE nhnentbasecamp; CREATE TABLE nhnentbasecamp.article (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, email VARCHAR(128) NOT NULL, password VARCHAR(128) NOT NULL, content VARCHAR(1024) NOT NULL, createdDate DATETIME NOT NULL, updatedDate DATETIME DEFAULT NULL; insert into article(email, password, content, createdDate) values ('test@test.com', 'test','now loading', NOW());"
+  - mysql -u root -e "USE mysql;" 
+  - mysql -u root -e "INSERT INTO user (Host, User, Password) VALUES ('localhost', 'testUser', password('test@testuser123'));" 
+  - mysql -u root -e "INSERT INTO user (Host, User, Password) VALUES ('%', 'testUser', password('test@testuser123'));"
+  - mysql -u root -e "FLUSH privileges; CREATE DATABASE nhnentbasecamp;"
+  - mysql -u root -e "GRANT ALL privileges ON nhnentbasecamp.* TO testUser@locahost IDENTIFIED BY 'test@testuser123';"
+  - mysql -u root -e "GRANT ALL privileges ON nhnentbasecamp.* TO testUser@'%' IDENTIFIED BY 'test@testuser123';"
+  - mysql -u root -e "USE nhnentbasecamp;"
+  - mysql -u root -e "CREATE TABLE article (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, email VARCHAR(128) NOT NULL, password VARCHAR(128) NOT NULL, content VARCHAR(1024) NOT NULL, createdDate DATETIME NOT NULL, updatedDate DATETIME DEFAULT NULL;"
+  - mysql -u root -e "insert into article(email, password, content, createdDate) values ('test@test.com','test','now loading', NOW());"
 
 script:
         - cd $TRAVIS_BUILD_DIR/basecamp
