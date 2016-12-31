@@ -133,9 +133,10 @@
 		}
 		
 		function isEmail(addr){
+			// ^[\\w]+([\\-_\\.]?[\\w]+)?@[\\w]+\\.[a-zA-Z]+$
+			var regex = /^[\w]+([-_\.]?[\w]+)?@[\w]+\.[A-Za-z]+$/;
 			console.log(addr);
-			var list = addr.split("@");
-			if(list.length === 2){
+			if(regex.test(addr)){
 				return true;
 			} else {
 				return false;

@@ -74,7 +74,7 @@ public class MyRestController {
 	}
 	
 	public boolean isEmail(String addr) {
-		String emailFilter = "^[\\w]+[\\-_\\.]*@[\\w]+\\.[a-zA-Z]+$";
+		String emailFilter = "^[\\w]+([\\-_\\.]?[\\w]+)?@[\\w]+\\.[a-zA-Z]+$";
 		StringCheck ec = (f, e) -> e.matches(f);
 		return ec.isCorrectString(emailFilter, addr);
 	}
